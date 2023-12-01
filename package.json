@@ -9,8 +9,7 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [
-  ],
+  "activationEvents": [],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
@@ -19,24 +18,28 @@
         "title": "Hello World"
       },
       {
-        "command": "extension-exercise.1",
-        "title": "aaa"
-      }
-    ]
-  },
-  "menus": {
-    "editor/context": [
-      {
-        "when": "editorHasSelection",
-        "command": "extension-exercise.helloWorld",
-        "group": "myGroup@4"
+        "command": "extension-exercise.2",
+        "title": "view selected text"
       },
       {
-        "when": "editorHasSelection",
-        "command": "extension-exercise.1",
-        "group": "myGroup@5"
+        "command": "extension-exercise.3",
+        "title": "django test"
       }
-    ]
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "when": "editorHasSelection",
+          "command": "extension-exercise.helloWorld",
+          "group": "myGroup@4"
+        },
+        {
+          "when": "editorHasSelection",
+          "command": "extension-exercise.2",
+          "group": "myGroup@5"
+        }
+      ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run package",
