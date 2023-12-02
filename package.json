@@ -9,7 +9,9 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "*"
+  ],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
@@ -58,9 +60,17 @@
     "@types/node": "18.x",
     "@typescript-eslint/eslint-plugin": "^6.9.0",
     "@typescript-eslint/parser": "^6.9.0",
+    "eslint-config-next": "^13.4.13",
+    "eslint-config-prettier": "^8.8.0",
     "eslint": "^8.52.0",
     "glob": "^10.3.10",
     "mocha": "^10.2.0",
+    "prettier": "^2.8.8",
+    "prettier-plugin-organize-imports": "^3.2.3",
+    "stylelint": "^14.16.1",
+    "stylelint-config-prettier": "^9.0.5",
+    "stylelint-config-recess-order": "^3.1.0",
+    "stylelint-config-standard": "^29.0.0",
     "typescript": "^5.2.2",
     "ts-loader": "^9.5.0",
     "webpack": "^5.89.0",
