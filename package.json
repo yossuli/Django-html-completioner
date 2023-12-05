@@ -10,7 +10,7 @@
     "Other"
   ],
   "activationEvents": [
-    "*"
+    "onLanguage:django-html"
   ],
   "main": "./dist/extension.js",
   "contributes": {
@@ -21,11 +21,7 @@
       },
       {
         "command": "extension-exercise.2",
-        "title": "view selected text"
-      },
-      {
-        "command": "extension-exercise.3",
-        "title": "django test"
+        "title": "test"
       }
     ],
     "menus": {
