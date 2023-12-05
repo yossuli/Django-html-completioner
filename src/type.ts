@@ -137,7 +137,7 @@ type UnaryOp = { nodeType: "UnaryOp"; op: unaryop; operand: expr };
 type Lambda = { nodeType: "Lambda"; args: arguments; body: expr };
 type IfExp = { nodeType: "IfExp"; test: expr; body: expr; orelse: expr };
 type Dict = { nodeType: "Dict"; keys: expr[]; values: expr[] };
-type PySet = { nodeType: "PySet"; elts: expr[] };
+type PySet = { nodeType: "Set"; elts: expr[] };
 type ListComp = {
   nodeType: "ListComp";
   elt: expr;
@@ -164,7 +164,7 @@ type Compare = {
   ops: cmpop[];
   comparators: expr[];
 };
-type Call = {
+export type Call = {
   nodeType: "Call";
   func: expr;
   args: expr[];

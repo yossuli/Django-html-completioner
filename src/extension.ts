@@ -3,7 +3,7 @@ import { execSync } from "child_process";
 import fs from "fs";
 import path from "path";
 import * as vscode from "vscode";
-import type { Module, stmt } from "./type";
+import type { Call, Module, stmt } from "./type";
 export function activate(context: vscode.ExtensionContext) {
   console.log(
     'Congratulations, your extension "extension-exercise" is now active!'
@@ -93,43 +93,65 @@ export function activate(context: vscode.ExtensionContext) {
               encoding: "utf-8",
             })
           );
-          const findThisFilePath = (ast: stmt | Module): Variable => {
+
+          const findVariable = (
+            body: stmt[],
+            variable: Variable
+          ): Variable | null => {
+            for (const b of body) {
+              if (
+                b.nodeType === "Assign" &&
+                b.value.nodeType === "Dict" &&
+                b.targets.some((c: any) => c.id === variable.id)
+              ) {
+                return {
+                  ...variable,
+                  variables: b.value.keys.map((d: any) => d.value),
+                };
+              }
+            }
+            return null;
+          };
+
+          const findThisFilePath = (ast: Module): Variable => {
+            for (const a of ast.body) {
+              const variable = findThisFilePath2(a);
+              if (variable.id !== null) {
+                if (variable.variables !== null) {
+                  return variable;
+                }
+                const newVariable = findVariable(ast.body, variable);
+                if (newVariable !== null) return newVariable;
+              }
+            }
+            return { id: null, variables: null };
+          };
+          const findThisFilePath2 = (ast: stmt): Variable => {
             if ("body" in ast) {
               for (const a of ast.body) {
-                const variable = findThisFilePath(a);
+                const variable = findThisFilePath2(a);
                 if (variable.id !== null) {
                   if (variable.variables !== null) {
                     return variable;
                   }
-                  for (const b of ast.body) {
-                    if (
-                      "targets" in b &&
-                      "value" in b &&
-                      "keys" in b.value &&
-                      b.targets.some((c: any) => c.id === variable.id)
-                    ) {
-                      console.log(b.value);
-                      return {
-                        ...variable,
-                        variables: b.value.keys.map((d: any) => d.value),
-                      };
-                    }
-                  }
+                  const newVariable = findVariable(ast.body, variable);
+                  if (newVariable !== null) return newVariable;
                 }
               }
             }
+            const isRender = (call: Call): boolean =>
+              call.func.nodeType === "Name" && call.func.id === "render";
             if (
-              ast?.nodeType === "Return" &&
-              ast.value &&
-              "func" in ast.value &&
-              "id" in ast.value.func &&
-              ast.value.func.id === "render"
+              ast.nodeType === "Return" &&
+              ast.value?.nodeType === "Call" &&
+              isRender(ast.value)
             ) {
-              console.log(ast.value.args[1]);
+              const isInThisFilePath = (call: Call): boolean =>
+                call.args[1].nodeType === "Constant" &&
+                call.args[1].value === thisFilePath;
               if (
-                "value" in ast.value.args[1] &&
-                "id" in ast.value.args[2] &&
-                ast.value.args[1].value === thisFilePath
+                isInThisFilePath(ast.value) &&
+                ast.value.args[2].nodeType === "Name"
               ) {
                 return { id: ast.value.args[2].id, variables: null };
               }
@@ -138,11 +160,11 @@ export function activate(context: vscode.ExtensionContext) {
           };
 
           const variables = findThisFilePath(astJSObject).variables;
-          console.log(
-            `[info - ${Date()}] this html file get variables : [${variables}]`
-          );
           if (variables === null) return;
 
+          console.log(
+            `[info - ${new Date().toLocaleTimeString()}] this html file get variables : [${variables}]`
+          );
           return variables.map((a) => {
             const newCompletionItem = new vscode.CompletionItem(
               a,
