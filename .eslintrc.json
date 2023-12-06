@@ -33,7 +33,7 @@
     "@typescript-eslint/strict-boolean-expressions": "error",
     "@typescript-eslint/no-unused-vars": "off",
     "complexity": ["error", 11],
-    "max-depth": ["error", 5],
+    "max-depth": ["error", 4],
     "max-nested-callbacks": ["error", 5]
     // "max-lines": ["error", 200]
   }

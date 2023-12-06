@@ -4,6 +4,9 @@ import fs from "fs";
 import path from "path";
 import * as vscode from "vscode";
 import type { Call, Module, stmt } from "./type";
+
+type Variable = { id: string | null; variables: string[] | null };
+
 export function activate(context: vscode.ExtensionContext) {
   console.log(
     'Congratulations, your extension "extension-exercise" is now active!'
@@ -87,7 +90,6 @@ export function activate(context: vscode.ExtensionContext) {
           ];
           const command = `python3 -c '${commandRows.join("\n")}'`;
 
-          type Variable = { id: string | null; variables: string[] | null };
           const astJSObject: Module = JSON.parse(
             execSync(command, {
               encoding: "utf-8",
