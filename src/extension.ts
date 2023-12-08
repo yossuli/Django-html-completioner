@@ -3,7 +3,7 @@ import { execSync } from "child_process";
 import fs from "fs";
 import path from "path";
 import * as vscode from "vscode";
-import type { Call, Module, stmt } from "./type";
+import type { Call, Module, stmt } from "./types/AST";
 
 type Variable = { id: string | null; variables: string[] | null };
 
