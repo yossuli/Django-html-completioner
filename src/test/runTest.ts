@@ -12,12 +12,21 @@ async function main() {
     // Passed to --extensionTestsPath
     const extensionTestsPath = path.resolve(__dirname, "./suite/index");
 
-    const testWorkspace = path.resolve(__dirname, "../../test-workspace");
+    // const testWorkspace = path.resolve(
+    //   __dirname,
+    //   "../../test-workspace/djangoApp/"
+    // );
+
+    const testDirectly = path.resolve(
+      __dirname,
+      "../../test-workspace/djangoApp/templates/djangoApp/index.html"
+    );
+
     // Download VS Code, unzip it and run the integration test
     await runTests({
       extensionDevelopmentPath,
       extensionTestsPath,
-      launchArgs: [testWorkspace],
+      launchArgs: [testDirectly],
     });
   } catch (err) {
     console.error("Failed to run tests", err);
