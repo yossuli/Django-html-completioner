@@ -19,8 +19,26 @@
       {
         "command": "extension-exercise.helloWorld",
         "title": "Hello World"
+      },
+      {
+        "command": "extension-exercise.2",
+        "title": "test"
       }
-    ]
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "when": "editorHasSelection",
+          "command": "extension-exercise.helloWorld",
+          "group": "myGroup@4"
+        },
+        {
+          "when": "editorHasSelection",
+          "command": "extension-exercise.2",
+          "group": "myGroup@5"
+        }
+      ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run package",
