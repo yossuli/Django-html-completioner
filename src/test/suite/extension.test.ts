@@ -20,6 +20,7 @@ suite("Extension Test Suite", async () => {
     assert.strictEqual(-1, [1, 2, 3].indexOf(0));
   });
   let editor: vscode.TextEditor;
+  let fileUri: vscode.Uri;
 
   setup(async () => {
     consoleColorLog(`set up`, "cyan");
@@ -31,7 +32,7 @@ suite("Extension Test Suite", async () => {
     consoleColorLog("set up 1", "cyan");
 
     // open folder
-    const fileUri = vscode.Uri.file(
+    fileUri = vscode.Uri.file(
       vscode.workspace.workspaceFolders[0].uri.fsPath + testFileLocation
     );
     consoleColorLog("set up 2", "cyan");
@@ -57,10 +58,15 @@ suite("Extension Test Suite", async () => {
 
     const completionList =
       await vscode.commands.executeCommand<vscode.CompletionList>(
-        "vscode.executeCompletionItemProvider"
+        "vscode.executeCompletionItemProvider",
+        fileUri,
+        new vscode.Position(0, 4)
       );
     consoleColorLog("3", "cyan");
-    consoleColorLog(`completionList is ${completionList}`, "cyan");
+    consoleColorLog(
+      `completionList is ${JSON.stringify(completionList)}`,
+      "cyan"
+    );
 
     // Ensure that completion items are provided
     assert.ok(completionList.items.length > 0);
@@ -83,3 +89,5 @@ suite("Extension Test Suite", async () => {
     await vscode.commands.executeCommand("workbench.action.closeAllEditors");
   });
 });
+
+// const a = 

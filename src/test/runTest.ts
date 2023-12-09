@@ -24,8 +24,9 @@ async function main() {
     await runTests({
       extensionDevelopmentPath,
       extensionTestsPath,
-      launchArgs: [testWorkspace],
+      // launchArgs: [testWorkspace],
       // launchArgs: [testApp],
+      launchArgs: [testFile],
     });
   } catch (err) {
     console.error("Failed to run tests", err);
