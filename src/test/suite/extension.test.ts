@@ -36,9 +36,8 @@ suite("Extension Test Suite", async () => {
     );
     consoleColorLog("set up 2", "cyan");
     consoleColorLog(`fileUri is ${JSON.stringify(fileUri)}`, "cyan");
-    // consoleColorLog(String(execSync("ls")), "yellow");
 
-    await sleep(10000);
+    // await sleep(10000);
 
     const document = await vscode.workspace.openTextDocument(fileUri);
     consoleColorLog("set up 3", "cyan");
