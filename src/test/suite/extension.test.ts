@@ -42,25 +42,26 @@ suite("Extension Test Suite", async () => {
 
     const document = await vscode.workspace.openTextDocument(fileUri);
     consoleColorLog("set up 3", "cyan");
+    consoleColorLog(document.languageId, "cyan");
     editor = await vscode.window.showTextDocument(document);
     consoleColorLog("set up 4", "cyan");
   });
 
   test("Completion Items are Provided", async function () {
     consoleColorLog(`test start`, "cyan");
-    editor.selection = new vscode.Selection(
-      new vscode.Position(0, 0),
-      new vscode.Position(0, 0)
-    );
+    // editor.selection = new vscode.Selection(
+    //   new vscode.Position(0, 0),
+    //   new vscode.Position(0, 0)
+    // );
 
-    consoleColorLog("2", "cyan");
-    consoleColorLog(`editor is ${editor.document.uri}`, "cyan");
+    // consoleColorLog("2", "cyan");
+    // consoleColorLog(`editor is ${editor}`, "cyan");
 
     const completionList =
       await vscode.commands.executeCommand<vscode.CompletionList>(
         "vscode.executeCompletionItemProvider",
         fileUri,
-        new vscode.Position(0, 4)
+        new vscode.Position(0, 0)
       );
     consoleColorLog("3", "cyan");
     consoleColorLog(
@@ -90,4 +91,4 @@ suite("Extension Test Suite", async () => {
   });
 });
 
-// const a = 
+// const a =

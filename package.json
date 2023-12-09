@@ -10,7 +10,8 @@
     "Other"
   ],
   "activationEvents": [
-    "onLanguage:django-html"
+    "onLanguage:django-html",
+    "onLanguage:html"
   ],
   "main": "./dist/extension.js",
   "contributes": {
