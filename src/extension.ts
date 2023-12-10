@@ -145,11 +145,11 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(disposable2);
 
   const provider1 = vscode.languages.registerCompletionItemProvider(
-    ["django-html", "html"],
+    ["django-html"],
     {
       provideCompletionItems(document: vscode.TextDocument) {
-        console.log(document.languageId);
-        console.log(document.uri);
+        // console.log(document.languageId);
+        // console.log(document.uri);
         const editor = vscode.window.activeTextEditor;
         if (editor === undefined) {
           return;
