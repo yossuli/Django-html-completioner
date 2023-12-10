@@ -37,6 +37,7 @@ suite("Extension Test Suite", async () => {
     const document = await vscode.workspace.openTextDocument(fileUri);
     consoleColorLog("set up 3", "cyan");
     consoleColorLog(document.languageId, "cyan");
+    consoleColorLog(document.uri.fsPath, "cyan");
     editor = await vscode.window.showTextDocument(document);
     consoleColorLog("set up 4", "cyan");
   });

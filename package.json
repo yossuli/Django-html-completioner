@@ -28,6 +28,9 @@
     "languages": [
       {
         "id": "django-html",
+        "extensions": [
+          ".html"
+        ],
         "aliases": [
           "Django HTML",
           "django"

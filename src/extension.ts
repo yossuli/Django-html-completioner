@@ -149,6 +149,7 @@ export function activate(context: vscode.ExtensionContext) {
     {
       provideCompletionItems(document: vscode.TextDocument) {
         console.log(document.languageId);
+        console.log(document.uri);
         const editor = vscode.window.activeTextEditor;
         if (editor === undefined) {
           return;
