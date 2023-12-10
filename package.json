@@ -25,6 +25,18 @@
         "title": "test"
       }
     ],
+    "languages": [
+      {
+        "id": "django-html",
+        "aliases": [
+          "Django HTML",
+          "django"
+        ],
+        "filenamePatterns": [
+          "**/templates/**/*.html"
+        ]
+      }
+    ],
     "menus": {
       "editor/context": [
         {

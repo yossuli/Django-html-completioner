@@ -13,12 +13,8 @@ const sleep = (ms: number): Promise<void> => {
 const testFileLocation = "/djangoApp/templates/djangoApp/index.html";
 
 suite("Extension Test Suite", async () => {
-  // vscode.window.showInformationMessage("Start all tests.");
+  vscode.window.showInformationMessage("Start all tests.");
 
-  test("Sample test", () => {
-    assert.strictEqual(-1, [1, 2, 3].indexOf(5));
-    assert.strictEqual(-1, [1, 2, 3].indexOf(0));
-  });
   let editor: vscode.TextEditor;
   let fileUri: vscode.Uri;
 
@@ -38,8 +34,6 @@ suite("Extension Test Suite", async () => {
     consoleColorLog("set up 2", "cyan");
     consoleColorLog(`fileUri is ${JSON.stringify(fileUri)}`, "cyan");
 
-    // await sleep(10000);
-
     const document = await vscode.workspace.openTextDocument(fileUri);
     consoleColorLog("set up 3", "cyan");
     consoleColorLog(document.languageId, "cyan");
@@ -49,23 +43,19 @@ suite("Extension Test Suite", async () => {
 
   test("Completion Items are Provided", async function () {
     consoleColorLog(`test start`, "cyan");
-    // editor.selection = new vscode.Selection(
-    //   new vscode.Position(0, 0),
-    //   new vscode.Position(0, 0)
-    // );
+    consoleColorLog(editor.document.languageId, "magenta");
 
-    // consoleColorLog("2", "cyan");
-    // consoleColorLog(`editor is ${editor}`, "cyan");
     consoleColorLog("11111111", "yellow");
     await vscode.commands.executeCommand("extension-exercise.2");
     consoleColorLog("11111111", "yellow");
+
     const completionList =
       await vscode.commands.executeCommand<vscode.CompletionList>(
         "vscode.executeCompletionItemProvider",
         editor.document.uri,
         new vscode.Position(0, 0)
       );
-    consoleColorLog("3", "cyan");
+
     consoleColorLog(
       `completionList is ${JSON.stringify(completionList)}`,
       "cyan"
@@ -92,5 +82,3 @@ suite("Extension Test Suite", async () => {
     await vscode.commands.executeCommand("workbench.action.closeAllEditors");
   });
 });
-
-// const a =
