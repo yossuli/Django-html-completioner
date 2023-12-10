@@ -56,11 +56,13 @@ suite("Extension Test Suite", async () => {
 
     // consoleColorLog("2", "cyan");
     // consoleColorLog(`editor is ${editor}`, "cyan");
-
+    consoleColorLog("11111111", "yellow");
+    await vscode.commands.executeCommand("extension-exercise.2");
+    consoleColorLog("11111111", "yellow");
     const completionList =
       await vscode.commands.executeCommand<vscode.CompletionList>(
         "vscode.executeCompletionItemProvider",
-        fileUri,
+        editor.document.uri,
         new vscode.Position(0, 0)
       );
     consoleColorLog("3", "cyan");
@@ -74,7 +76,7 @@ suite("Extension Test Suite", async () => {
     const completionItem = completionList.items[0];
     assert.strictEqual(completionItem.label, "test1");
     assert.strictEqual(completionItem.kind, vscode.CompletionItemKind.Variable);
-    assert.strictEqual(completionItem.detail, "../../test.py");
+    assert.strictEqual(completionItem.detail, "../../views.py");
     vscode.window.showInformationMessage("End all tests.");
     await vscode.commands.executeCommand("workbench.action.closeActiveEditor");
   });
