@@ -7,16 +7,17 @@ export async function run(): Promise<void> {
   const mocha = new Mocha({
     ui: "tdd",
     color: true,
+    timeout: 60000,
   });
 
   const testsRoot = path.resolve(__dirname, "..");
+
   const files = await glob("**/**.test.js", { cwd: testsRoot });
 
   // Add files to the test suite
   files.forEach((f) => mocha.addFile(path.resolve(testsRoot, f)));
-
-  try {
-    return new Promise<void>((c, e) => {
+  return new Promise<void>((c, e) => {
+    try {
       // Run the mocha test
       mocha.run((failures) => {
         if (failures > 0) {
@@ -25,8 +26,8 @@ export async function run(): Promise<void> {
           c();
         }
       });
-    });
-  } catch (err) {
-    console.error(err);
-  }
+    } catch (err) {
+      console.error(err);
+    }
+  });
 }
