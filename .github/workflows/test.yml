@@ -12,20 +12,21 @@ jobs:
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.os }}
-    build:
-      steps:
-        - name: Checkout
-          uses: actions/checkout@v3
-        - uses: actions/setup-node@v3
-          with:
-            node-version: "20"
-            cache: "npm"
-        - name: Install dependencies
-          run: npm install
-        # xvfb is required to run vscode on linux
-        - name: Run test on linux
-          run: xvfb-run -a npm run test
-          if: runner.os == 'Linux'
-        - name: Run test on Mac and Windows
-          run: npm run test
-          if: runner.os != 'Linux'
+    steps:
+      build:
+        steps:
+          - name: Checkout
+            uses: actions/checkout@v3
+          - uses: actions/setup-node@v3
+            with:
+              node-version: "20"
+              cache: "npm"
+          - name: Install dependencies
+            run: npm install
+          # xvfb is required to run vscode on linux
+          - name: Run test on linux
+            run: xvfb-run -a npm run test
+            if: runner.os == 'Linux'
+          - name: Run test on Mac and Windows
+            run: npm run test
+            if: runner.os != 'Linux'
