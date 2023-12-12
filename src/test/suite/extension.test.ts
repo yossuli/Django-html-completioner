@@ -22,8 +22,7 @@ suite("Extension Test Suite", async () => {
     consoleColorLog(`set up`, "cyan");
     if (vscode.workspace.workspaceFolders === undefined) {
       consoleColorLog(`workspace folders is undefined`, "cyan");
-
-      return;
+      assert.fail();
     }
     consoleColorLog("set up 1", "cyan");
 
