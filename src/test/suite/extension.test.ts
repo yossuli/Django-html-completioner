@@ -43,12 +43,13 @@ suite("Extension Test Suite", async () => {
   });
 
   test("Completion Items are Provided", async function () {
+    await sleep(1000);
     consoleColorLog(`test start`, "cyan");
     consoleColorLog(editor.document.languageId, "magenta");
 
-    consoleColorLog("11111111", "yellow");
-    await vscode.commands.executeCommand("extension-exercise.2");
-    consoleColorLog("11111111", "yellow");
+    // consoleColorLog("11111111", "yellow");
+    // await vscode.commands.executeCommand("extension-exercise.2");
+    // consoleColorLog("11111111", "yellow");
 
     const completionList =
       await vscode.commands.executeCommand<vscode.CompletionList>(
