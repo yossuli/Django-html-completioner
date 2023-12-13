@@ -21,7 +21,6 @@ jobs:
           cache: "npm"
       - name: Install dependencies
         run: npm install
-      # xvfb is required to run vscode on linux
       - name: Run test on linux
         run: xvfb-run -a npm run test
         if: runner.os == 'Linux'
