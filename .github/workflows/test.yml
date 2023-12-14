@@ -13,14 +13,18 @@ jobs:
         os: [macos-latest, ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v3
+      - name: setup Node.js
+        uses: actions/setup-node@v3
         with:
-          node-version: "20"
-          cache: "npm"
-      - name: Install dependencies
-        run: npm install
+          node-version: 18
+      - uses: actions/cache@v3
+        id: npm-cache
+        with:
+          path: "node_modules"
+          key: npm-${{ hashFiles('package-lock.json') }}
+      - run: npm install
+        if: steps.npm-cache.outputs.cache-hit != 'true'
       - name: Run test on linux
         run: xvfb-run -a npm run test
         if: runner.os == 'Linux'
