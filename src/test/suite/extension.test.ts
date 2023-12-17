@@ -46,10 +46,6 @@ suite("Extension Test Suite", async () => {
     consoleColorLog(`test start`, "cyan");
     consoleColorLog(editor.document.languageId, "magenta");
 
-    // consoleColorLog("11111111", "yellow");
-    // await vscode.commands.executeCommand("extension-exercise.2");
-    // consoleColorLog("11111111", "yellow");
-
     const completionList =
       await vscode.commands.executeCommand<vscode.CompletionList>(
         "vscode.executeCompletionItemProvider",
