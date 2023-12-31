@@ -6,28 +6,42 @@ on:
       - main
 
 jobs:
-  test:
-    name: test
+  command:
     strategy:
       matrix:
-        os: [macos-latest, ubuntu-latest, windows-latest]
+        os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v3
-      - name: setup Node.js
-        uses: actions/setup-node@v3
+      #   Ubuntuのバージョンやコードネームを確認する
+      #   runs-onで指定したUbuntuが選択されていることが確認できる
+      - name: Show ubuntu details
+        run: lsb_release -a
+        # `actions/checkout@v4`を実行する前のファイル構成とパスを確認する
+        # `/home/runner/work/<リポジトリ名>/<リポジトリ名>`のパス内に何も入っていないことが確認できる
+      - name: Inspect files before checkout
+        run: ls -la
+      - name: show current directory before checkout
+        run: pwd
+        # `actions/checkout@v4`を実行
+        # `actions/setup-node@v4`を実行
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: set-up node
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
-      - uses: actions/cache@v3
-        id: npm-cache
-        with:
-          path: "node_modules"
-          key: npm-${{ hashFiles('package-lock.json') }}
-      - run: npm install
-        if: steps.npm-cache.outputs.cache-hit != 'true'
+          node-version: 20
+          cache: 'npm'
+      - run: npm ci
       - name: Run test on linux
         run: xvfb-run -a npm run test
         if: runner.os == 'Linux'
-      - name: Run test on Mac and Windows
+      - name: Run test on Mac
         run: npm run test
         if: runner.os != 'Linux'
+        # 実行した後のファイル構成、パス、ブランチ一覧を確認する
+      - name: Inspect files after checkout
+        run: ls -la
+      - name: show current directory after checkout
+        run: pwd
+      - name: show all branches after checkout
+        run: git branch -a
