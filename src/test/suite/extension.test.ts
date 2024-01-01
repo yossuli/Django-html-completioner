@@ -31,7 +31,7 @@ suite("Extension Test Suite", async () => {
       vscode.workspace.workspaceFolders[0].uri.fsPath + testFileLocation
     );
     consoleColorLog("set up 2", "cyan");
-    consoleColorLog(`fileUri is ${JSON.stringify(fileUri)}`, "cyan");
+    consoleColorLog(`fileUri is ${JSON.stringify(fileUri.path)}`, "cyan");
 
     const document = await vscode.workspace.openTextDocument(fileUri);
     consoleColorLog("set up 3", "cyan");
