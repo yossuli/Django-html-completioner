@@ -26,23 +26,28 @@ suite("Extension Test Suite", async () => {
     }
     consoleColorLog("set up 1", "cyan");
 
-    // open folder
-    fileUri = vscode.Uri.file(
-      vscode.workspace.workspaceFolders[0].uri.fsPath + testFileLocation
-    );
-    consoleColorLog("set up 2", "cyan");
-    consoleColorLog(`fileUri is ${JSON.stringify(fileUri.path)}`, "cyan");
+    await sleep(1000);
+    const filePath =
+      vscode.workspace.workspaceFolders[0].uri.fsPath + testFileLocation;
 
+    await sleep(1000);
+    fileUri = vscode.Uri.file(filePath);
+    consoleColorLog("set up 2", "cyan");
+    // consoleColorLog(`fileUri is ${JSON.stringify(fileUri.path)}`, "cyan");
+
+    await sleep(1000);
     const document = await vscode.workspace.openTextDocument(fileUri);
     consoleColorLog("set up 3", "cyan");
-    consoleColorLog(document.languageId, "cyan");
-    consoleColorLog(document.uri.fsPath, "cyan");
+    // consoleColorLog(document.languageId, "cyan");
+    // consoleColorLog(document.uri.fsPath, "cyan");
+
+    await sleep(1000);
     editor = await vscode.window.showTextDocument(document);
     consoleColorLog("set up 4", "cyan");
   });
 
   test("Completion Items are Provided", async function () {
-    await sleep(1000);
+    // await sleep(1000);
     consoleColorLog(`test start`, "cyan");
     consoleColorLog(editor.document.languageId, "magenta");
 

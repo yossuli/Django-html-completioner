@@ -8,10 +8,4 @@ export default defineConfig({
     timeout: 20000,
     color: true,
   },
-  // launchArgs: [
-  //   path.resolve(
-  //     __dirname,
-  //     "../../test-workspace/testApp/templates/testApp/index.html"
-  //   ),
-  // ],
 });
