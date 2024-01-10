@@ -1,7 +1,7 @@
 import * as assert from "assert";
 
 import * as vscode from "vscode";
-import { consoleColorLog } from "../../utils";
+import { consoleColorLog } from "../utils";
 // import * as myExtension from '../../extension';
 
 const sleep = (ms: number): Promise<void> => {
