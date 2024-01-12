@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { execSync } from "child_process";
 import * as vscode from "vscode";
 import type {
@@ -90,11 +89,13 @@ export function activate(context: vscode.ExtensionContext) {
               if (
                 b.nodeType === "Assign" &&
                 b.value.nodeType === "Dict" &&
-                b.targets.some((c: any) => c.id === variable.id)
+                b.targets.some(
+                  (c) => c.nodeType === "Name" && c.id === variable.id
+                )
               ) {
                 return {
                   ...variable,
-                  variables: b.value.keys.map((d: any) => d.value),
+                  variables: b.value.keys.map((d) => d.value),
                 };
               }
             }
