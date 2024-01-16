@@ -15,31 +15,10 @@ import type {
   While,
   With,
   stmt,
-} from "./types/AST";
-import type { Variable } from "./types/types";
+} from "../types/AST";
+import type { Variable } from "../types/types";
 
 export function activate(context: vscode.ExtensionContext) {
-  console.log(
-    'Congratulations, your extension "extension-exercise" is now active!'
-  );
-
-  const disposable = vscode.commands.registerCommand(
-    "extension-exercise.helloWorld",
-    () => {
-      vscode.window.showInformationMessage(
-        "Hello World from extension-exercise!"
-      );
-    }
-  );
-
-  const disposable2 = vscode.commands.registerCommand(
-    "extension-exercise.2",
-    () => {}
-  );
-
-  context.subscriptions.push(disposable);
-  context.subscriptions.push(disposable2);
-
   const provider1 = vscode.languages.registerCompletionItemProvider(
     ["django-html"],
     {
