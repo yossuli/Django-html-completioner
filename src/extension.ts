@@ -16,8 +16,7 @@ import type {
   With,
   stmt,
 } from "./types/AST";
-
-type Variable = { id: string | null; variables: string[] | null };
+import type { Variable } from "./types/types";
 
 export function activate(context: vscode.ExtensionContext) {
   console.log(
@@ -95,7 +94,9 @@ export function activate(context: vscode.ExtensionContext) {
               ) {
                 return {
                   ...variable,
-                  variables: b.value.keys.map((d) => d.value),
+                  variables: b.value.keys.map((d) =>
+                    "value" in d ? String(d.value) : ""
+                  ),
                 };
               }
             }
