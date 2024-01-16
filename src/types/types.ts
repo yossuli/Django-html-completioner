@@ -7,3 +7,5 @@ export type ConsoleLogColor =
   | "magenta"
   | "cyan"
   | "white";
+
+export type Variable = { id: string | null; variables: string[] | null };

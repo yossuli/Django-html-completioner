@@ -1,6 +1,6 @@
-import type { ConsoleLogColor } from "./types/types";
+import type { ConsoleLogColor } from "../types/types";
 
-const colors= {
+export const colors: { [color in ConsoleLogColor]: string } = {
   black: "\u001b[30m",
   red: "\u001b[31m",
   green: "\u001b[32m",
