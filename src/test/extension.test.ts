@@ -1,9 +1,7 @@
 import * as assert from "assert";
-
 import * as vscode from "vscode";
+import type { ConsoleLogColor } from "../types/types";
 import { consoleColorLog } from "../utils/consoleColorLog";
-
-// import * as myExtension from '../../extension';
 
 const sleep = (ms: number): Promise<void> => {
   return new Promise((resolve) => {
@@ -11,13 +9,30 @@ const sleep = (ms: number): Promise<void> => {
   });
 };
 
-const testFileLocation = "/djangoApp/templates/djangoApp/index.html";
+const testFileLocationAndExpectedItems: {
+  location: string;
+  item: string;
+  color: ConsoleLogColor;
+}[] = [
+  {
+    location: "/djangoApp/templates/djangoApp/index.html",
+    item: "test1",
+    color: "green",
+  },
+  {
+    location: "/djangoApp/templates/djangoApp/index2.html",
+    item: "test2",
+    color: "yellow",
+  },
+];
 
 suite("Extension Test Suite", async () => {
   vscode.window.showInformationMessage("Start all tests.");
-
-  let editor: vscode.TextEditor;
-  let fileUri: vscode.Uri;
+  const editorAndExpectedItems: {
+    editor: vscode.TextEditor;
+    item: string;
+    path?: string;
+  }[] = [];
 
   setup(async () => {
     consoleColorLog(`set up`, "cyan");
@@ -25,55 +40,72 @@ suite("Extension Test Suite", async () => {
       consoleColorLog(`workspace folders is undefined`, "cyan");
       assert.fail();
     }
-    consoleColorLog("set up 1", "cyan");
 
-    await sleep(100);
-    const filePath =
-      vscode.workspace.workspaceFolders[0].uri.fsPath + testFileLocation;
+    for (const testFileLocationAndExpectedItem of testFileLocationAndExpectedItems) {
+      consoleColorLog("set up 1", testFileLocationAndExpectedItem.color);
 
-    await sleep(100);
-    fileUri = vscode.Uri.file(filePath);
-    consoleColorLog("set up 2", "cyan");
+      await sleep(1000);
+      const filePath =
+        vscode.workspace.workspaceFolders[0].uri.fsPath +
+        testFileLocationAndExpectedItem.location;
 
-    await sleep(100);
-    const document = await vscode.workspace.openTextDocument(fileUri);
-    consoleColorLog("set up 3", "cyan");
+      await sleep(1000);
+      const fileUri = vscode.Uri.file(filePath);
+      consoleColorLog("set up 2", testFileLocationAndExpectedItem.color);
 
-    await sleep(100);
-    editor = await vscode.window.showTextDocument(document);
-    consoleColorLog("set up 4", "cyan");
+      await sleep(1000);
+      const document = await vscode.workspace.openTextDocument(fileUri);
+      consoleColorLog("set up 3", testFileLocationAndExpectedItem.color);
+
+      await sleep(1000);
+      editorAndExpectedItems.push({
+        editor: await vscode.window.showTextDocument(document),
+        item: testFileLocationAndExpectedItem.item,
+        path: fileUri.path,
+      });
+      consoleColorLog("set up 4", testFileLocationAndExpectedItem.color);
+    }
   });
 
-  test("Completion Items are Provided", async function () {
-    consoleColorLog(`test start`, "cyan");
-    consoleColorLog(editor.document.languageId, "magenta");
+  for (let i = 0; i < testFileLocationAndExpectedItems.length; i++) {
+    const testFileLocationAndExpectedItem = testFileLocationAndExpectedItems[i];
 
-    const completionList =
-      await vscode.commands.executeCommand<vscode.CompletionList>(
-        "vscode.executeCompletionItemProvider",
-        editor.document.uri,
-        new vscode.Position(0, 0)
+    test(`Completion Items are Provided - ${testFileLocationAndExpectedItem.item}`, async function () {
+      const editorAndExpectedItem = editorAndExpectedItems[i];
+      
+      consoleColorLog(
+        `uri is ${editorAndExpectedItem.editor.document.uri}`,
+        testFileLocationAndExpectedItems[i].color
+      );
+      const completionList =
+        await vscode.commands.executeCommand<vscode.CompletionList>(
+          "vscode.executeCompletionItemProvider",
+          editorAndExpectedItem.editor.document.uri,
+          new vscode.Position(0, 0)
+        );
+
+      consoleColorLog(
+        `completionList is ${JSON.stringify(completionList)}`,
+        testFileLocationAndExpectedItems[i].color
       );
 
-    consoleColorLog(
-      `completionList is ${JSON.stringify(completionList)}`,
-      "cyan"
-    );
+      assert.ok(completionList.items.length > 0);
+      const completionItem = completionList.items[0];
+      assert.strictEqual(completionItem.label, editorAndExpectedItem.item);
+      assert.strictEqual(
+        completionItem.kind,
+        vscode.CompletionItemKind.Variable
+      );
+      assert.strictEqual(completionItem.detail, "../../views.py");
 
-    // Ensure that completion items are provided
-    assert.ok(completionList.items.length > 0);
-    const completionItem = completionList.items[0];
-    assert.strictEqual(completionItem.label, "test1");
-    assert.strictEqual(completionItem.kind, vscode.CompletionItemKind.Variable);
-    assert.strictEqual(completionItem.detail, "../../views.py");
-    vscode.window.showInformationMessage("End all tests.");
-    await vscode.commands.executeCommand("workbench.action.closeActiveEditor");
-  });
-
-  // Additional tests can be added as needed
+      vscode.window.showInformationMessage("End all tests.");
+      await vscode.commands.executeCommand(
+        "workbench.action.closeActiveEditor"
+      );
+    });
+  }
 
   teardown(async function () {
-    // Clean up the temporary test workspace
     await vscode.commands.executeCommand("vscode.setEditorLayout", {
       groups: [{}, {}],
       orientation: 0,
