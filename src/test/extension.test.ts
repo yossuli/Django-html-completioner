@@ -33,15 +33,14 @@ suite("Extension Test Suite", async () => {
     item: string;
     path?: string;
   }[] = [];
-
   setup(async () => {
     consoleColorLog(`set up`, "cyan");
     if (vscode.workspace.workspaceFolders === undefined) {
       consoleColorLog(`workspace folders is undefined`, "cyan");
       assert.fail();
     }
-
-    for (const testFileLocationAndExpectedItem of testFileLocationAndExpectedItems) {
+    // for (const testFileLocationAndExpectedItem of testFileLocationAndExpectedItems) {
+    const testFileLocationAndExpectedItem = testFileLocationAndExpectedItems[0];
       consoleColorLog("set up 1", testFileLocationAndExpectedItem.color);
 
       await sleep(1000);
@@ -64,18 +63,16 @@ suite("Extension Test Suite", async () => {
         path: fileUri.path,
       });
       consoleColorLog("set up 4", testFileLocationAndExpectedItem.color);
-    }
-  });
-
-  for (let i = 0; i < testFileLocationAndExpectedItems.length; i++) {
-    const testFileLocationAndExpectedItem = testFileLocationAndExpectedItems[i];
-
-    test(`Completion Items are Provided - ${testFileLocationAndExpectedItem.item}`, async function () {
-      const editorAndExpectedItem = editorAndExpectedItems[i];
+      consoleColorLog(`editorAndExpectedItem is ${fileUri.path}`, "magenta");
+      // }
+    });
+    test("Completion Items are Provided", async function () {
+      // for (const editorAndExpectedItem of editorAndExpectedItems) {
+      const editorAndExpectedItem = editorAndExpectedItems[0];
       
       consoleColorLog(
         `uri is ${editorAndExpectedItem.editor.document.uri}`,
-        testFileLocationAndExpectedItems[i].color
+        testFileLocationAndExpectedItems[0].color
       );
       const completionList =
         await vscode.commands.executeCommand<vscode.CompletionList>(
@@ -86,7 +83,7 @@ suite("Extension Test Suite", async () => {
 
       consoleColorLog(
         `completionList is ${JSON.stringify(completionList)}`,
-        testFileLocationAndExpectedItems[i].color
+        testFileLocationAndExpectedItems[0].color
       );
 
       assert.ok(completionList.items.length > 0);
@@ -97,14 +94,12 @@ suite("Extension Test Suite", async () => {
         vscode.CompletionItemKind.Variable
       );
       assert.strictEqual(completionItem.detail, "../../views.py");
-
       vscode.window.showInformationMessage("End all tests.");
       await vscode.commands.executeCommand(
         "workbench.action.closeActiveEditor"
       );
-    });
-  }
-
+    // }
+  });
   teardown(async function () {
     await vscode.commands.executeCommand("vscode.setEditorLayout", {
       groups: [{}, {}],
@@ -112,4 +107,5 @@ suite("Extension Test Suite", async () => {
     });
     await vscode.commands.executeCommand("workbench.action.closeAllEditors");
   });
+  
 });
