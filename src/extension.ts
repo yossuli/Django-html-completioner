@@ -47,7 +47,7 @@ export function activate(context: vscode.ExtensionContext) {
           if (variables === null) return;
 
           console.log(
-            `[info - ${new Date().toLocaleTimeString()}] this html file get variables : [${variables}]`
+            `[info - ${new Date().toLocaleTimeString()}] ${templateName} get variables : [${variables}]`
           );
           return variables.map((a) => {
             const newCompletionItem = new vscode.CompletionItem(
