@@ -1,3 +1,17 @@
+import type {
+  AsyncFor,
+  AsyncFunctionDef,
+  AsyncWith,
+  ClassDef,
+  For,
+  FunctionDef,
+  If,
+  Try,
+  TryStar,
+  While,
+  With,
+} from "./AST";
+
 export type ConsoleLogColor =
   | "black"
   | "red"
@@ -8,4 +22,17 @@ export type ConsoleLogColor =
   | "cyan"
   | "white";
 
-export type Variable = { id: string | null; variables: string[] | null };
+export type RenderContext = { id: string | null; variables: string[] | null };
+
+export type HaveBody =
+  | FunctionDef
+  | AsyncFunctionDef
+  | ClassDef
+  | For
+  | AsyncFor
+  | While
+  | If
+  | With
+  | AsyncWith
+  | Try
+  | TryStar;
