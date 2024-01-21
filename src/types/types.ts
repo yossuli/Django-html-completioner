@@ -39,6 +39,6 @@ export type HaveBody =
 
 export type TestFileLocationAndExpectedItems = {
   location: string;
-  item: string;
+  items: string[];
   color?: ConsoleLogColor;
 };
