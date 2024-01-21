@@ -36,3 +36,9 @@ export type HaveBody =
   | AsyncWith
   | Try
   | TryStar;
+
+export type TestFileLocationAndExpectedItems = {
+  location: string;
+  item: string;
+  color?: ConsoleLogColor;
+};

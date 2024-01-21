@@ -1,6 +1,6 @@
 import * as assert from "assert";
 import * as vscode from "vscode";
-import type { ConsoleLogColor } from "../types/types";
+import type { TestFileLocationAndExpectedItems } from "../types/types";
 import { consoleColorLog } from "../utils/consoleColorLog";
 
 const sleep = (ms: number): Promise<void> => {
@@ -9,11 +9,7 @@ const sleep = (ms: number): Promise<void> => {
   });
 };
 
-const testFileLocationAndExpectedItems: {
-  location: string;
-  item: string;
-  color: ConsoleLogColor;
-}[] = [
+const testFileLocationAndExpectedItems: TestFileLocationAndExpectedItems[] = [
   {
     location: "/djangoApp/templates/djangoApp/index.html",
     item: "test1",
@@ -22,31 +18,29 @@ const testFileLocationAndExpectedItems: {
   {
     location: "/djangoApp/templates/djangoApp/index2.html",
     item: "test2",
-    color: "yellow",
+    // color: "yellow",
   },
 ];
 
 suite("Extension Test Suite", async () => {
   vscode.window.showInformationMessage("Start all tests.");
-  const testProcess = (testCount: number): Promise<void> =>
+  const testProcess = (
+    testFileLocationAndExpectedItem: TestFileLocationAndExpectedItems
+  ): Promise<void> =>
     new Promise((resolve) => {
       let editorAndExpectedItem: {
         editor: vscode.TextEditor;
         item: string;
         path?: string;
       };
-      console.log(`<<<${testCount}>>>`);
-      // setup(async () => {});
-      console.log(`<<<<${testCount}>>>>`);
-      test(`Completion Items are Provided - ${testCount}`, async function () {
+      setup(async () => {
         consoleColorLog(`set up`, "cyan");
         if (vscode.workspace.workspaceFolders === undefined) {
           consoleColorLog(`workspace folders is undefined`, "cyan");
           assert.fail();
         }
-        // for (const testFileLocationAndExpectedItem of testFileLocationAndExpectedItems) {
-        const testFileLocationAndExpectedItem =
-          testFileLocationAndExpectedItems[testCount];
+        // const testFileLocationAndExpectedItem =
+        //   testFileLocationAndExpectedItems[testCount];
         consoleColorLog("set up 1", testFileLocationAndExpectedItem.color);
 
         await sleep(1000);
@@ -70,14 +64,13 @@ suite("Extension Test Suite", async () => {
         };
         consoleColorLog("set up 4", testFileLocationAndExpectedItem.color);
         consoleColorLog(`editorAndExpectedItem is ${fileUri.path}`, "magenta");
-        // }
-
-        // for (const editorAndExpectedItem of editorAndExpectedItems) {
-        // const editorAndExpectedItem = editorAndExpectedItem;
-
+      });
+      test(`Completion Items are Provided - ${
+        testFileLocationAndExpectedItem.location.split("/").slice(-1)[0]
+      }`, async function () {
         consoleColorLog(
           `uri is ${editorAndExpectedItem.editor.document.uri}`,
-          testFileLocationAndExpectedItems[testCount].color
+          testFileLocationAndExpectedItem.color
         );
         const completionList =
           await vscode.commands.executeCommand<vscode.CompletionList>(
@@ -88,7 +81,7 @@ suite("Extension Test Suite", async () => {
 
         consoleColorLog(
           `completionList is ${JSON.stringify(completionList)}`,
-          testFileLocationAndExpectedItems[testCount].color
+          testFileLocationAndExpectedItem.color
         );
 
         assert.ok(completionList.items.length > 0);
@@ -104,7 +97,8 @@ suite("Extension Test Suite", async () => {
         await vscode.commands.executeCommand(
           "workbench.action.closeActiveEditor"
         );
-        // }
+      });
+      teardown(async function () {
         await vscode.commands.executeCommand("vscode.setEditorLayout", {
           groups: [{}, {}],
           orientation: 0,
@@ -113,13 +107,10 @@ suite("Extension Test Suite", async () => {
           "workbench.action.closeAllEditors"
         );
       });
-      console.log(`<<<<<${testCount}>>>>>`);
-      resolve(console.log("End tests."));
-      // teardown(async function () {
-      // });
+      resolve();
     });
-  await testProcess(0);
+  await testProcess(testFileLocationAndExpectedItems[0]);
   consoleColorLog("test1", "green");
-  await testProcess(1);
+  await testProcess(testFileLocationAndExpectedItems[1]);
   consoleColorLog("test2", "yellow");
 });
