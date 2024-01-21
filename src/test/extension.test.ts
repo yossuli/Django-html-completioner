@@ -10,8 +10,8 @@ const testFileLocationAndExpectedItems: TestFileLocationAndExpectedItems[] = [
   },
   {
     location: "/djangoApp/templates/djangoApp/index2.html",
-    items: ["test2"],
-    // color: "yellow",
+    items: ["test2_1", "test2_2"],
+    color: "yellow",
   },
 ];
 

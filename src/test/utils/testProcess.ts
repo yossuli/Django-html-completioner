@@ -57,19 +57,17 @@ export const completionItemsTest = (
         completionList.items.length ===
           testFileLocationAndExpectedItem.items.length
       );
-      const completionItem = completionList.items[0];
-      assert.strictEqual(
-        completionItem.label,
-        testFileLocationAndExpectedItem.items[0]
-      );
-      assert.strictEqual(
-        completionItem.kind,
-        vscode.CompletionItemKind.Variable
-      );
-      assert.strictEqual(completionItem.detail, "../../views.py");
-      // await vscode.commands.executeCommand(
-      //   "workbench.action.closeActiveEditor"
-      // );
+      completionList.items.forEach((completionItem, i) => {
+        assert.strictEqual(
+          completionItem.label,
+          testFileLocationAndExpectedItem.items[i]
+        );
+        assert.strictEqual(
+          completionItem.kind,
+          vscode.CompletionItemKind.Variable
+        );
+        assert.strictEqual(completionItem.detail, "../../views.py");
+      });
     });
     teardown(async function () {
       vscode.window.showInformationMessage("End tests.");
