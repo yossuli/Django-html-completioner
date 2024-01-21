@@ -11,7 +11,6 @@ export const colors: { [color in ConsoleLogColor]: string } = {
   white: "\u001b[37m",
 };
 
-export const consoleColorLog = (
-  message: string,
-  color: ConsoleLogColor = "black"
-) => console.log(`${colors[color]}${message}\u001b[0m`);
+export const consoleColorLog = (message: string, color?: ConsoleLogColor) => {
+  console.log(`${colors[color ?? "white"]}${message}\u001b[0m`);
+};
