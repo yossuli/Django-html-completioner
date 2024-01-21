@@ -28,15 +28,17 @@ const testFileLocationAndExpectedItems: {
 
 suite("Extension Test Suite", async () => {
   vscode.window.showInformationMessage("Start all tests.");
-  const editorAndExpectedItems: {
-    editor: vscode.TextEditor;
-    item: string;
-    path?: string;
-  }[] = [];
   const testProcess = (testCount: number): Promise<void> =>
     new Promise((resolve) => {
+      let editorAndExpectedItem: {
+        editor: vscode.TextEditor;
+        item: string;
+        path?: string;
+      };
       console.log(`<<<${testCount}>>>`);
-      setup(async () => {
+      // setup(async () => {});
+      console.log(`<<<<${testCount}>>>>`);
+      test(`Completion Items are Provided - ${testCount}`, async function () {
         consoleColorLog(`set up`, "cyan");
         if (vscode.workspace.workspaceFolders === undefined) {
           consoleColorLog(`workspace folders is undefined`, "cyan");
@@ -61,19 +63,17 @@ suite("Extension Test Suite", async () => {
         consoleColorLog("set up 3", testFileLocationAndExpectedItem.color);
 
         await sleep(1000);
-        editorAndExpectedItems.push({
+        editorAndExpectedItem = {
           editor: await vscode.window.showTextDocument(document),
           item: testFileLocationAndExpectedItem.item,
           path: fileUri.path,
-        });
+        };
         consoleColorLog("set up 4", testFileLocationAndExpectedItem.color);
         consoleColorLog(`editorAndExpectedItem is ${fileUri.path}`, "magenta");
         // }
-      });
-      console.log(`<<<<${testCount}>>>>`);
-      test(`Completion Items are Provided - ${testCount}`, async function () {
+
         // for (const editorAndExpectedItem of editorAndExpectedItems) {
-        const editorAndExpectedItem = editorAndExpectedItems[testCount];
+        // const editorAndExpectedItem = editorAndExpectedItem;
 
         consoleColorLog(
           `uri is ${editorAndExpectedItem.editor.document.uri}`,
@@ -99,25 +99,27 @@ suite("Extension Test Suite", async () => {
           vscode.CompletionItemKind.Variable
         );
         assert.strictEqual(completionItem.detail, "../../views.py");
-        vscode.window.showInformationMessage("End all tests.");
+        vscode.window.showInformationMessage("End tests.");
         await sleep(500);
         await vscode.commands.executeCommand(
           "workbench.action.closeActiveEditor"
         );
         // }
-        console.log(`<<<<<${testCount}>>>>>`);
-        resolve();
+        await vscode.commands.executeCommand("vscode.setEditorLayout", {
+          groups: [{}, {}],
+          orientation: 0,
+        });
+        await vscode.commands.executeCommand(
+          "workbench.action.closeAllEditors"
+        );
       });
+      console.log(`<<<<<${testCount}>>>>>`);
+      resolve(console.log("End tests."));
+      // teardown(async function () {
+      // });
     });
   await testProcess(0);
   consoleColorLog("test1", "green");
   await testProcess(1);
   consoleColorLog("test2", "yellow");
-  teardown(async function () {
-    await vscode.commands.executeCommand("vscode.setEditorLayout", {
-      groups: [{}, {}],
-      orientation: 0,
-    });
-    await vscode.commands.executeCommand("workbench.action.closeAllEditors");
-  });
 });
