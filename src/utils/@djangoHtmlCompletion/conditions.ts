@@ -13,6 +13,7 @@ export const isInTemplateNameFromCall = (
 ): RenderContext | null => {
   if (
     isInTemplateName(astValue, templateName) &&
+    astValue.args.length > 2 &&
     astValue.args[2].nodeType === "Name"
   ) {
     return { id: astValue.args[2].id, variables: null };
