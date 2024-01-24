@@ -6,8 +6,8 @@ vscode 拡張機能開発の練習のためのリポジトリです。
 
 ### djangoHTML への補完機能
 
-views.py を抽象構文木解析して render 関数の第三引数の定義を検索
-該当する辞書オブジェクトのキーのリストを取得
+views.py を抽象構文木解析して render 関数の第三引数の定義を検索<br/>
+該当する辞書オブジェクトのキーのリストを取得<br/>
 djangoHTML ファイル編集時の予測変換にキーのリストを追加
 
 ### テスト
@@ -23,7 +23,7 @@ djangoHTML ファイル編集時の予測変換にキーのリストを追加
      └── views.py
 ```
 
-```py:djangoApp/views.py
+```py
 def index(request):
     if a:
         if b:
