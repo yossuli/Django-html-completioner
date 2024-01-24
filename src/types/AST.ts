@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 type identifier = string;
 export type int = number;
 export type constant = number | string | boolean | null | undefined;
