@@ -1,7 +1,7 @@
 import type { stmt } from "../../types/AST";
 import type { RenderContext } from "../../types/types";
-import { findTemplateNameAfterLoopBody } from "./findTemplateNameAfterLoopBody";
-import { findTemplateNameLoopBody } from "./findTemplateNameLoopBody";
+import { findTemplateNameAfterLoopBody } from "./afterLoopBody";
+import { findTemplateNameLoopBody } from "./loopBody";
 
 export const findTemplateNameFromStmt = (
   ast: stmt,

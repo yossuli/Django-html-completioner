@@ -1,11 +1,12 @@
-import type { HaveBody, RenderContext } from "../../types/types";
-import { findTemplateNameFromStmt } from "./findTemplateNameFromStmt";
-import { findContext } from "./findcontext";
+import type { Module } from "../../types/AST";
+import type { RenderContext } from "../../types/types";
+import { findContext } from "./findContext";
+import { findTemplateNameFromStmt } from "./fromStmt";
 
-export const findTemplateNameLoopBody = (
-  ast: HaveBody,
+export const findTemplateNameFromModule = (
+  ast: Module,
   templateName: string
-): RenderContext | null => {
+): RenderContext => {
   for (const a of ast.body) {
     const variable = findTemplateNameFromStmt(a, templateName);
     if (variable.id !== null) {
@@ -16,5 +17,5 @@ export const findTemplateNameLoopBody = (
       if (newVariable !== null) return newVariable;
     }
   }
-  return null;
+  return { id: null, variables: null };
 };
