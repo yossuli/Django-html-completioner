@@ -15,13 +15,16 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
-  const disposable2 = vscode.commands.registerCommand(
-    "extension-exercise.2",
-    () => {}
-  );
+  const onDidOpenTextDocument = vscode.workspace.onDidOpenTextDocument((e) => {
+    if (e.languageId === "django-html") {
+      vscode.window.showInformationMessage(
+        "django-htmlファイルが開かれました!"
+      );
+    }
+  });
 
   context.subscriptions.push(disposable);
-  context.subscriptions.push(disposable2);
+  context.subscriptions.push(onDidOpenTextDocument);
 
   context.subscriptions.push(djangoHTMLCompletionItemProvider);
 }
