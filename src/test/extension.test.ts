@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 import type { TestFileLocationAndExpectedItems } from "./../types/types";
-import { completionItemsTestInVscode } from "./utils/completionItemsTestInVscode";
+import { completionItemsTestInVscode } from "./utils/suites/completionItemsTestInVscode";
 
 const testFileLocationAndExpectedItems: TestFileLocationAndExpectedItems[] = [
   {
