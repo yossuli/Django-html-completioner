@@ -20,8 +20,8 @@
         "title": "Hello World"
       },
       {
-        "command": "extension-exercise.2",
-        "title": "test"
+        "command": "extension-exercise.checkRendering",
+        "title": "Check Rendering"
       }
     ],
     "languages": [
@@ -45,11 +45,6 @@
           "when": "editorHasSelection",
           "command": "extension-exercise.helloWorld",
           "group": "myGroup@4"
-        },
-        {
-          "when": "editorHasSelection",
-          "command": "extension-exercise.2",
-          "group": "myGroup@5"
         }
       ]
     }
@@ -68,6 +63,7 @@
   "devDependencies": {
     "@types/mocha": "^10.0.3",
     "@types/node": "18.x",
+    "@types/sinon": "^17.0.3",
     "@types/vscode": "^1.84.0",
     "@typescript-eslint/eslint-plugin": "^6.9.0",
     "@typescript-eslint/parser": "^6.9.0",
@@ -80,6 +76,7 @@
     "mocha": "^10.2.0",
     "prettier": "^2.8.8",
     "prettier-plugin-organize-imports": "^3.2.3",
+    "sinon": "^17.0.1",
     "stylelint": "^14.16.1",
     "stylelint-config-prettier": "^9.0.5",
     "stylelint-config-recess-order": "^3.1.0",
