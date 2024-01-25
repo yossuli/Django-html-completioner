@@ -1,13 +1,13 @@
 import * as assert from "assert";
 import * as vscode from "vscode";
-import type { TestFileLocationAndExpectedItems } from "../../../types/types";
+import type { CompletionItemsTestCases } from "../../../types/types";
 import { consoleColorLog } from "../../../utils/consoleColorLog";
 import { zip2 } from "../../../utils/zip";
 import { cleanupVscode } from "../cleanupVscode";
 import { setupEditor } from "../setupEditor";
 
 export const completionItemsTestInVscode = (
-  testFileLocationAndExpectedLabel: TestFileLocationAndExpectedItems
+  testFileLocationAndExpectedLabel: CompletionItemsTestCases
 ) => {
   vscode.window.showInformationMessage("Start test.");
   let editor: vscode.TextEditor;
@@ -15,8 +15,8 @@ export const completionItemsTestInVscode = (
   // ANCHOR setup
   setup(async () => {
     editor = await setupEditor(
-      consoleLogColor,
-      testFileLocationAndExpectedLabel.location
+      testFileLocationAndExpectedLabel.location,
+      consoleLogColor
     );
     consoleColorLog("End setup.", consoleLogColor);
   });
