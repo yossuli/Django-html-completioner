@@ -37,7 +37,7 @@ export type HaveBody =
   | Try
   | TryStar;
 
-export type TestFileLocationAndExpectedItems = {
+export type CompletionItemsTestCases = {
   location: string;
   items: string[];
   color?: ConsoleLogColor;

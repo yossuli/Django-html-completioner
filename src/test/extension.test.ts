@@ -1,8 +1,8 @@
 import * as vscode from "vscode";
-import type { TestFileLocationAndExpectedItems } from "./../types/types";
+import type { CompletionItemsTestCases } from "./../types/types";
 import { completionItemsTestInVscode } from "./utils/suites/completionItemsTestInVscode";
 
-const testFileLocationAndExpectedItems: TestFileLocationAndExpectedItems[] = [
+const completionItemsTestCases: CompletionItemsTestCases[] = [
   {
     location: "/djangoApp/templates/djangoApp/index.html",
     items: ["test1"],
@@ -20,9 +20,9 @@ const testFileLocationAndExpectedItems: TestFileLocationAndExpectedItems[] = [
   },
 ];
 
-for (const testFileLocationAndExpectedItem of testFileLocationAndExpectedItems) {
+for (const completionItemsTestCase of completionItemsTestCases) {
   suite("Extension Test Suite", async () => {
     vscode.window.showInformationMessage("Start all tests.");
-    completionItemsTestInVscode(testFileLocationAndExpectedItem);
+    completionItemsTestInVscode(completionItemsTestCase);
   });
 }
