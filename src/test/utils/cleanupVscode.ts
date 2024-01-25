@@ -6,4 +6,5 @@ export const cleanupVscode = async () => {
     orientation: 0,
   });
   await vscode.commands.executeCommand("workbench.action.closeAllEditors");
+  console.log("cleanupVscode");
 };

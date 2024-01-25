@@ -40,7 +40,6 @@ export function activate(context: vscode.ExtensionContext) {
 
           const templateName = path.basename(e.fileName, ".html");
 
-          consoleColorLog(`${!data.match(`${templateName}.html`)}`,'cyan');
           if (!data.match(`${templateName}.html`)) {
             vscode.window
               .showWarningMessage(
