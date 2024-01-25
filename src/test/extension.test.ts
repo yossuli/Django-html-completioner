@@ -23,6 +23,6 @@ const testFileLocationAndExpectedItems: TestFileLocationAndExpectedItems[] = [
 for (const testFileLocationAndExpectedItem of testFileLocationAndExpectedItems) {
   suite("Extension Test Suite", async () => {
     vscode.window.showInformationMessage("Start all tests.");
-    await completionItemsTestInVscode(testFileLocationAndExpectedItem);
+    completionItemsTestInVscode(testFileLocationAndExpectedItem);
   });
 }
