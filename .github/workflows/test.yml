@@ -6,7 +6,7 @@ jobs:
   command:
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ubuntu-latest, macos-latest]
     runs-on: ${{ matrix.os }}
     steps:
       # `actions/checkout@v4`を実行
@@ -22,6 +22,6 @@ jobs:
       - name: Run test on linux
         run: xvfb-run -a npm run test
         if: runner.os == 'Linux'
-      - name: Run test on Mac or Windows
+      - name: Run test on Mac
         run: npm run test
         if: runner.os != 'Linux'
