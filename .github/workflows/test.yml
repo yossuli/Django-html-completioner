@@ -23,6 +23,6 @@ jobs:
       - name: Run test on linux
         run: xvfb-run -a npm run test
         if: runner.os == 'Linux'
-      - name: Run test on Mac
+      - name: Run test on Mac or Windows 
         run: npm run test
         if: runner.os != 'Linux'
