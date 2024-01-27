@@ -19,7 +19,7 @@ export const viewsPyToASTObject = (appPath: string): Module => {
     `        return node`,
     //TODO windows で 'D:\d:\'となる根本的な原因を探る
     // `print(json.dumps(ast_to_json(ast.parse(open('${appPath}/views.py').read()))))`,
-    `print(json.dumps(ast_to_json(ast.parse(open('D:\\a\\vscode-extension-exercise\\vscode-extension-exercise/test-workspace/djangoApp/views.py').read()))))`,
+    `print(json.dumps(ast_to_json(ast.parse(open('a\\vscode-extension-exercise\\vscode-extension-exercise/test-workspace/djangoApp/views.py').read()))))`,
   ];
   consoleColorLog(`${appPath}/views.py`, "magenta");
   const command = `python3 -c "${commandRows.join("\n")}"`;
