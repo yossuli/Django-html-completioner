@@ -7,13 +7,10 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        # os: [windows-latest]
     runs-on: ${{ matrix.os }}
     steps:
-      # `actions/checkout@v4`を実行
       - name: Checkout
         uses: actions/checkout@v4
-        # `actions/setup-node@v4`を実行
       - name: set-up node
         uses: actions/setup-node@v4
         with:
@@ -23,7 +20,7 @@ jobs:
         run: Test-Path D:\a\vscode-extension-exercise\vscode-extension-exercise/test-workspace/djangoApp/views.py
         if: runner.os == 'Windows'
       - name: Check current directory on mac or linux
-        run: [ -e "/Users/runner/work/vscode-extension-exercise/vscode-extension-exercise/test-workspace/djangoApp/views.py" ] && true || false
+        run: '[ -e "/Users/runner/work/vscode-extension-exercise/vscode-extension-exercise/test-workspace/djangoApp/views.py" ] && echo true || echo false'
         if: runner.os != 'Windows'
       - run: npm ci
       - name: Run test on linux
