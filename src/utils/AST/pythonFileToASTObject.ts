@@ -17,7 +17,11 @@ export const viewsPyToASTObject = (appPath: string): Module => {
     `        return [ast_to_json(item) for item in node]`,
     `    else:`,
     `        return node`,
-    `print(json.dumps(ast_to_json(ast.parse(open('${appPath}/views.py').read()))))`,
+    //TODO windows で 'D:\d:\'となる根本的な原因を探る
+    `print(json.dumps(ast_to_json(ast.parse(open('${appPath.replace(
+      "D:/",
+      ""
+    )}/views.py').read()))))`,
   ];
   consoleColorLog(`${appPath}/views.py`, "magenta");
   const command = `python3 -c "${commandRows.join("\n")}"`;
