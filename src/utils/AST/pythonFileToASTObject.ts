@@ -19,7 +19,7 @@ export const viewsPyToASTObject = (appPath: string): Module => {
     `        return node`,
     //TODO windows で 'D:\d:\'となる根本的な原因を探る
     `print(json.dumps(ast_to_json(ast.parse(open('${appPath.replace(
-      "D:\\",
+      "d:\\",
       ""
     )}/views.py').read()))))`,
   ];
