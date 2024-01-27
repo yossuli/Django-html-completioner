@@ -10,7 +10,7 @@ export const viewsPyToASTObject = (appPath: string): Module => {
     `        field = {`,
     `            field: ast_to_json(getattr(node, field)) for field in node._fields`,
     `        }`,
-    `        field["nodeType"] = type(node).__name__`,
+    `        field['nodeType'] = type(node).__name__`,
     `        return field`,
     `    elif isinstance(node, list):`,
     `        return [ast_to_json(item) for item in node]`,
