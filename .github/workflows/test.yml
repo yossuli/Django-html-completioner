@@ -23,7 +23,7 @@ jobs:
         run: Test-Path D:\a\vscode-extension-exercise\vscode-extension-exercise/test-workspace/djangoApp/views.py
         if: runner.os == 'Windows'
       - name: Check current directory on mac or linux
-        run: $ [ -e "/Users/runner/work/vscode-extension-exercise/vscode-extension-exercise/test-workspace/djangoApp/views.py" ] && true || false
+        run: [ -e "/Users/runner/work/vscode-extension-exercise/vscode-extension-exercise/test-workspace/djangoApp/views.py" ] && true || false
         if: runner.os != 'Windows'
       - run: npm ci
       - name: Run test on linux
