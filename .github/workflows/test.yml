@@ -19,12 +19,8 @@ jobs:
         with:
           node-version: 20
           cache: "npm"
-      - name: Check current directory on windows
-        run: cd
-        if: runner.os == 'Windows'
-      - name: Check current directory on mac or linux
+      - name: Check current directory
         run: pwd
-        if: runner.os != 'Windows'
       - run: npm ci
       - name: Run test on linux
         run: xvfb-run -a npm run test
