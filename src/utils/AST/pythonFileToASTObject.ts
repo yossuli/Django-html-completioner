@@ -1,5 +1,6 @@
 import { execSync } from "child_process";
 import type { Module } from "../../types/AST";
+import { consoleColorLog } from "../consoleColorLog";
 
 export const viewsPyToASTObject = (appPath: string): Module => {
   const commandRows = [
@@ -16,9 +17,9 @@ export const viewsPyToASTObject = (appPath: string): Module => {
     `        return [ast_to_json(item) for item in node]`,
     `    else:`,
     `        return node`,
-    `print('${appPath}/views.py')`,
     `print(json.dumps(ast_to_json(ast.parse(open('${appPath}/views.py').read()))))`,
   ];
+  consoleColorLog(`${appPath}/views.py`, "magenta");
   const command = `python3 -c "${commandRows.join("\n")}"`;
 
   return JSON.parse(
