@@ -23,7 +23,7 @@ export const viewsPyToASTObject = (appPath: string): Module => {
       ""
     )}/views.py').read()))))`,
   ];
-  consoleColorLog(`${appPath}/views.py`, "magenta");
+  consoleColorLog(`${appPath.replace("d:/", "")}/views.py`, "magenta");
   const command = `python3 -c "${commandRows.join("\n")}"`;
 
   return JSON.parse(
