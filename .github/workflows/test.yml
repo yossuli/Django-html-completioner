@@ -1,48 +1,27 @@
 name: test
 
-on:
-  push:
-    branches:
-      - main
-      - develop
+on: push
 
 jobs:
   command:
     strategy:
       matrix:
-        os: [ubuntu-latest]
+        os: [ubuntu-latest, windows-latest, macos-latest]
     runs-on: ${{ matrix.os }}
     steps:
-      #   Ubuntuのバージョンやコードネームを確認する
-      #   runs-onで指定したUbuntuが選択されていることが確認できる
-      - name: Show ubuntu details
-        run: lsb_release -a
-        # `actions/checkout@v4`を実行する前のファイル構成とパスを確認する
-        # `/home/runner/work/<リポジトリ名>/<リポジトリ名>`のパス内に何も入っていないことが確認できる
-      - name: Inspect files before checkout
-        run: ls -la
-      - name: show current directory before checkout
-        run: pwd
-        # `actions/checkout@v4`を実行
-        # `actions/setup-node@v4`を実行
+      # `actions/checkout@v4`を実行
       - name: Checkout
         uses: actions/checkout@v4
+        # `actions/setup-node@v4`を実行
       - name: set-up node
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
+          cache: "npm"
       - run: npm ci
       - name: Run test on linux
         run: xvfb-run -a npm run test
         if: runner.os == 'Linux'
-      - name: Run test on Mac
+      - name: Run test on Mac or Windows
         run: npm run test
         if: runner.os != 'Linux'
-        # 実行した後のファイル構成、パス、ブランチ一覧を確認する
-      - name: Inspect files after checkout
-        run: ls -la
-      - name: show current directory after checkout
-        run: pwd
-      - name: show all branches after checkout
-        run: git branch -a
