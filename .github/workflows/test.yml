@@ -6,8 +6,8 @@ jobs:
   command:
     strategy:
       matrix:
-        # os: [ubuntu-latest, macos-latest, windows-latest]
-        os: [windows-latest]
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        # os: [windows-latest]
     runs-on: ${{ matrix.os }}
     steps:
       # `actions/checkout@v4`を実行
@@ -19,8 +19,12 @@ jobs:
         with:
           node-version: 20
           cache: "npm"
-      - name: ls
-        run: ls
+      - name: Check current directory on windows
+        run: cd
+        if: runner.os == 'Windows'
+      - name: Check current directory on mac or linux
+        run: pwd
+        if: runner.os != 'Windows'
       - run: npm ci
       - name: Run test on linux
         run: xvfb-run -a npm run test
