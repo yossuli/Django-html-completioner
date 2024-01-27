@@ -16,8 +16,6 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
-  // extension.ts
-
   const onDidOpenTextDocument = vscode.window.onDidChangeActiveTextEditor(
     () => {
       vscode.commands.executeCommand("extension-exercise.checkRendering");

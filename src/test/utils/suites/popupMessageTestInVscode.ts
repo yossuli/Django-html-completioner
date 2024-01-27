@@ -1,4 +1,3 @@
-/* eslint-disable max-lines */
 import * as assert from "assert";
 import path from "path";
 import * as sinon from "sinon";
@@ -17,7 +16,6 @@ export const popupMessageTestInVscode = (a: PopupMassageItemsTestCases) => {
   const consoleLogColor: ConsoleLogColor = "magenta";
 
   let editor: vscode.TextEditor;
-
   let showWarningMessageStub: sinon.SinonStub;
   let showInformationMessageSpy: sinon.SinonSpy;
   let openTextDocumentSpy: sinon.SinonSpy;
@@ -47,10 +45,6 @@ export const popupMessageTestInVscode = (a: PopupMassageItemsTestCases) => {
 
   //ANCHOR test
   test(`Popup Message in ${fileName}`, async function () {
-    consoleColorLog("execute command", consoleLogColor);
-
-    await sleep(100);
-
     if (a.isCalled) {
       assert.ok(showWarningMessageStub.notCalled, "showWarningMessageStub");
       assert.ok(
@@ -66,8 +60,7 @@ export const popupMessageTestInVscode = (a: PopupMassageItemsTestCases) => {
 
       assert.ok(showTextDocumentSpy.calledOnce, "showTextDocumentSpy");
       assert.ok(openTextDocumentSpy.calledOnce, "openTextDocumentSpy");
-    } //
-    else {
+    } else {
       assert.ok(showWarningMessageStub.calledOnce, "showWarningMessageStub");
       assert.ok(
         showInformationMessageSpy.notCalled,
@@ -100,7 +93,8 @@ export const popupMessageTestInVscode = (a: PopupMassageItemsTestCases) => {
   teardown(() => {
     showWarningMessageStub.restore();
     showInformationMessageSpy.restore();
-    sinon.restore();
+    openTextDocumentSpy.restore();
+    showTextDocumentSpy.restore();
     consoleColorLog("stubs reset");
   });
 };
