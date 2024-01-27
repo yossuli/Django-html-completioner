@@ -36,6 +36,10 @@ def index(request):
 
 上記の`test-workspace`において`index.html, index2.html, index3.html, index4.html`に対して`vscode/test-cli`、`sinon.js`を用い、正しいメッセージが表示されているか、正しく`views.py`を開くかを確認<br/>
 
+### 問題点
+
+windows で動作しない可能性
+
 ## 1.0.0
 
 ### djangoHTML への補完機能
