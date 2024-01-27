@@ -1,8 +1,13 @@
 import * as vscode from "vscode";
-import type { TestFileLocationAndExpectedItems } from "./../types/types";
-import { completionItemsTestInVscode } from "./utils/completionItemsTestInVscode";
+import { sleep } from "../utils/sleep";
+import type {
+  CompletionItemsTestCases,
+  PopupMassageItemsTestCases,
+} from "./../types/types";
+import { completionItemsTestInVscode } from "./utils/suites/completionItemsTestInVscode";
+import { popupMessageTestInVscode } from "./utils/suites/popupMessageTestInVscode";
 
-const testFileLocationAndExpectedItems: TestFileLocationAndExpectedItems[] = [
+const completionItemsTestCases: CompletionItemsTestCases[] = [
   {
     location: "/djangoApp/templates/djangoApp/index.html",
     items: ["test1"],
@@ -19,10 +24,35 @@ const testFileLocationAndExpectedItems: TestFileLocationAndExpectedItems[] = [
     color: "blue",
   },
 ];
+const popupMassageItemsTestCases: PopupMassageItemsTestCases[] = [
+  {
+    location: "/djangoApp/templates/djangoApp/index.html",
+    isCalled: true,
+  },
+  {
+    location: "/djangoApp/templates/djangoApp/index2.html",
+    isCalled: true,
+  },
+  {
+    location: "/djangoApp/templates/djangoApp/index3.html",
+    isCalled: true,
+  },
+  {
+    location: "/djangoApp/templates/djangoApp/index4.html",
+    isCalled: false,
+  },
+];
 
-for (const testFileLocationAndExpectedItem of testFileLocationAndExpectedItems) {
+for (const completionItemsTestCase of completionItemsTestCases) {
   suite("Extension Test Suite", async () => {
     vscode.window.showInformationMessage("Start all tests.");
-    await completionItemsTestInVscode(testFileLocationAndExpectedItem);
+    completionItemsTestInVscode(completionItemsTestCase);
+  });
+}
+for (const popupMassageItemsTestCase of popupMassageItemsTestCases) {
+  suite("Extension Test Suite", async () => {
+    vscode.window.showInformationMessage("Start all tests.");
+    popupMessageTestInVscode(popupMassageItemsTestCase);
+    await sleep(1000);
   });
 }

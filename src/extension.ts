@@ -1,4 +1,5 @@
 import * as vscode from "vscode";
+import { checkRenderingCommand } from "./extensions/checkRenderingCommand";
 import { djangoHTMLCompletionItemProvider } from "./extensions/djangoHTMLCompletionItemProvider";
 
 export function activate(context: vscode.ExtensionContext) {
@@ -15,13 +16,16 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
-  const disposable2 = vscode.commands.registerCommand(
-    "extension-exercise.2",
-    () => {}
+  const onDidOpenTextDocument = vscode.window.onDidChangeActiveTextEditor(
+    () => {
+      vscode.commands.executeCommand("extension-exercise.checkRendering");
+    }
   );
 
+  context.subscriptions.push(checkRenderingCommand);
+  context.subscriptions.push(onDidOpenTextDocument);
+
   context.subscriptions.push(disposable);
-  context.subscriptions.push(disposable2);
 
   context.subscriptions.push(djangoHTMLCompletionItemProvider);
 }

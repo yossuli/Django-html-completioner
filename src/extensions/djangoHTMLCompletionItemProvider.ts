@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
-import { findTemplateNameFromModule } from "../utils/@djangoHtmlCompletion/fromModule";
-import { viewsPyToASTObject } from "../utils/@djangoHtmlCompletion/pythonFileToASTObject";
+import { findTemplateNameFromModule } from "../utils/AST/fromModule";
+import { viewsPyToASTObject } from "../utils/AST/pythonFileToASTObject";
 
 export const djangoHTMLCompletionItemProvider =
   vscode.languages.registerCompletionItemProvider(["django-html"], {

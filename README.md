@@ -2,6 +2,44 @@
 
 vscode 拡張機能開発の練習のためのリポジトリです。
 
+## 1.1.0
+
+### djangoHTML と views.py を結びつける
+
+djangoHTML ファイルを開いたときに views.py を検索し、ファイルの中に開いた djangoHTML ファイルが書かれているかをポップアップで表示<br/>
+書かれていない場合、メッセージから views.py を開くことができる
+
+### テスト
+
+```
+.
+└── djangoApp
+     ├── templates
+     │   └── djangoApp
+     │       ├── index.html
+     │       ├── index2.html
+     │       ├── index3.html
+     │       └── index4.html
+     └── views.py
+```
+
+```py
+def index(request):
+    if a:
+        if b:
+            return render(request,'djangoApp/index3.html')
+        context={'test2_1':'value','test2_2':'value'}
+        return render(request,'djangoApp/index2.html',context)
+    context={'test1':'value'}
+    return render(request,'djangoApp/index.html',context)
+```
+
+上記の`test-workspace`において`index.html, index2.html, index3.html, index4.html`に対して`vscode/test-cli`、`sinon.js`を用い、正しいメッセージが表示されているか、正しく`views.py`を開くかを確認<br/>
+
+### 問題点
+
+windows で動作しない可能性
+
 ## 1.0.0
 
 ### djangoHTML への補完機能
