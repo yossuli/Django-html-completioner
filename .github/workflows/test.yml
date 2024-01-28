@@ -6,8 +6,8 @@ jobs:
   command:
     strategy:
       matrix:
+        os: [ubuntu-latest, macos-latest]
         # os: [ubuntu-latest, macos-latest, windows-latest]
-        os: [windows-latest]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout

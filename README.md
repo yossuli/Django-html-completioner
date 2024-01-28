@@ -38,7 +38,7 @@ def index(request):
 
 ### 問題点
 
-windows で動作しない可能性
+windows で動作しない
 
 ## 1.0.0
 
