@@ -72,7 +72,6 @@ export const popupMessageTestInVscode = (a: PopupMassageItemsTestCases) => {
         `'${fileName}'はviews.pyで呼び出されていない可能性があります`
       );
       assert.strictEqual(showWarningMessageStub.getCall(0).args.length, 3);
-      consoleColorLog(`${openTextDocumentSpy.getCalls().map((a) => a.args)}`);
 
       assert.strictEqual(showTextDocumentSpy.callCount, 2);
       assert.strictEqual(
