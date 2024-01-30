@@ -8,7 +8,12 @@ export const checkRenderingCommand = vscode.commands.registerCommand(
     const e = vscode.window.activeTextEditor?.document;
     if (!e) return;
     if (e.languageId === "django-html") {
-      const viewsPath = path.resolve(e.uri.fsPath, "../../../views.py");
+      const filePath = e.uri.fsPath;
+      const isWindows = filePath[0] !== "/";
+      const viewsPath = path.resolve(filePath, "../../../views.py");
+
+      const formattedViewsPath =
+        viewsPath[0].toUpperCase() + viewsPath.slice(1);
 
       // views.pyを読み込みます。
       fs.readFile(viewsPath, "utf8", (err, data) => {
@@ -29,7 +34,9 @@ export const checkRenderingCommand = vscode.commands.registerCommand(
             .then(async (selection) => {
               if (selection === "views.pyを開く") {
                 // views.pyを開く処理
-                const doc = await vscode.workspace.openTextDocument(viewsPath);
+                const doc = await vscode.workspace.openTextDocument(
+                  isWindows ? formattedViewsPath : viewsPath
+                );
                 vscode.window.showTextDocument(doc);
               }
             });
