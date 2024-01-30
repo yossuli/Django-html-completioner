@@ -8,9 +8,7 @@ export const checkRenderingCommand = vscode.commands.registerCommand(
     const e = vscode.window.activeTextEditor?.document;
     if (!e) return;
     if (e.languageId === "django-html") {
-      const pathArray = e.uri.path.split("/");
-      const appPath = pathArray.slice(0, -3).join("/");
-      const viewsPath = path.join(appPath, "views.py");
+      const viewsPath = path.resolve(e.uri.fsPath, "../../../views.py");
 
       // views.pyを読み込みます。
       fs.readFile(viewsPath, "utf8", (err, data) => {
