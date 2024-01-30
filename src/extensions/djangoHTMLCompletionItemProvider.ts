@@ -1,3 +1,4 @@
+import path from "path";
 import * as vscode from "vscode";
 import { findTemplateNameFromModule } from "../utils/AST/fromModule";
 import { viewsPyToASTObject } from "../utils/AST/pythonFileToASTObject";
@@ -10,9 +11,11 @@ export const djangoHTMLCompletionItemProvider =
         return;
       }
 
-      const pathArray = editor.document.uri.path.split("/");
-      const appPath = pathArray.slice(0, -3).join("/");
-      const templateName = pathArray.slice(-2).join("/");
+      const filePath = editor.document.uri.fsPath;
+      const appPath = path.resolve(filePath, "../../../");
+      const templateName = `${path.basename(
+        path.dirname(path.normalize(filePath))
+      )}/${path.basename(filePath)}`;
 
       try {
         const astJSObject = viewsPyToASTObject(appPath);
