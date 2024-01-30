@@ -11,7 +11,9 @@ import { sleep } from "../../../utils/sleep";
 import { cleanupVscode } from "../cleanupVscode";
 import { setupEditor } from "../setupEditor";
 
-export const popupMessageTestInVscode = (a: PopupMassageItemsTestCases) => {
+export const popupMessageTestInVscode = (
+  testCases: PopupMassageItemsTestCases
+) => {
   vscode.window.showInformationMessage("Start test.");
   const consoleLogColor: ConsoleLogColor = "magenta";
 
@@ -24,9 +26,7 @@ export const popupMessageTestInVscode = (a: PopupMassageItemsTestCases) => {
   setup(async () => {
     showWarningMessageStub = sinon.stub(vscode.window, "showWarningMessage");
     showWarningMessageStub.returns(
-      new Promise((resolve) => {
-        resolve("views.pyを開く");
-      })
+      new Promise((resolve) => resolve("views.pyを開く"))
     );
     showInformationMessageSpy = sinon.spy(
       vscode.window,
@@ -36,16 +36,16 @@ export const popupMessageTestInVscode = (a: PopupMassageItemsTestCases) => {
     showTextDocumentSpy = sinon.spy(vscode.window, "showTextDocument");
     await sleep(100);
 
-    editor = await setupEditor(a.location);
+    editor = await setupEditor(testCases.location);
     await sleep(100);
 
     consoleColorLog("End setup.", consoleLogColor);
   });
-  const fileName = a.location.split("/").slice(-1)[0];
+  const fileName = testCases.location.split("/").slice(-1)[0];
 
   //ANCHOR test
   test(`Popup Message in ${fileName}`, async function () {
-    if (a.isCalled) {
+    if (testCases.isCalled) {
       assert.ok(showWarningMessageStub.notCalled, "showWarningMessageStub");
       assert.ok(
         showInformationMessageSpy.calledOnce,
@@ -76,17 +76,18 @@ export const popupMessageTestInVscode = (a: PopupMassageItemsTestCases) => {
       assert.strictEqual(showTextDocumentSpy.callCount, 2);
       assert.strictEqual(
         openTextDocumentSpy.getCall(1).args[0],
-        path.resolve(
-          path.join(
-            path.resolve(__dirname, "../../../../test-workspace"),
-            a.location
-          ),
-          "../../../views.py"
-        )
+        path
+          .resolve(
+            path.join(
+              path.resolve(__dirname, "../../../../test-workspace"),
+              testCases.location
+            ),
+            "../../../views.py"
+          )
+          .replace("C:\\", "c:\\")
       );
       assert.strictEqual(openTextDocumentSpy.callCount, 2);
     }
-    await sleep(100);
   });
   teardown(cleanupVscode);
   teardown(() => {
