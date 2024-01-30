@@ -76,15 +76,13 @@ export const popupMessageTestInVscode = (
       assert.strictEqual(showTextDocumentSpy.callCount, 2);
       assert.strictEqual(
         openTextDocumentSpy.getCall(1).args[0],
-        path
-          .resolve(
-            path.join(
-              path.resolve(__dirname, "../../../../test-workspace"),
-              testCases.location
-            ),
-            "../../../views.py"
-          )
-          .replace("C:\\", "c:\\")
+        path.resolve(
+          path.join(
+            path.resolve(__dirname, "../../../../test-workspace"),
+            testCases.location
+          ),
+          "../../../views.py"
+        )
       );
       assert.strictEqual(openTextDocumentSpy.callCount, 2);
     }
