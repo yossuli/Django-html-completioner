@@ -46,4 +46,5 @@ export type CompletionItemsTestCases = {
 export type PopupMassageItemsTestCases = {
   location: string;
   isCalled: boolean;
+  color?: ConsoleLogColor;
 };

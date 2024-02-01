@@ -1,6 +1,6 @@
-# vscode 拡張機能の開発の練習
+# Django-html-completioner
 
-vscode 拡張機能開発の練習のためのリポジトリです。
+vscode 拡張機能開発の練習のためのリポジトリでした。
 
 ## 1.1.1
 

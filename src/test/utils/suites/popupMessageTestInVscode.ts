@@ -2,20 +2,17 @@ import * as assert from "assert";
 import path from "path";
 import * as sinon from "sinon";
 import * as vscode from "vscode";
-import type {
-  ConsoleLogColor,
-  PopupMassageItemsTestCases,
-} from "../../../types/types";
+import type { PopupMassageItemsTestCases } from "../../../types/types";
 import { consoleColorLog } from "../../../utils/consoleColorLog";
-import { sleep } from "../../../utils/sleep";
 import { cleanupVscode } from "../cleanupVscode";
 import { setupEditor } from "../setupEditor";
+import { sleep } from "../sleep";
 
 export const popupMessageTestInVscode = (
-  testCases: PopupMassageItemsTestCases
+  testCase: PopupMassageItemsTestCases
 ) => {
   vscode.window.showInformationMessage("Start test.");
-  const consoleLogColor: ConsoleLogColor = "magenta";
+  const consoleLogColor = testCase.color;
 
   let editor: vscode.TextEditor;
   let showWarningMessageStub: sinon.SinonStub;
@@ -34,18 +31,17 @@ export const popupMessageTestInVscode = (
     );
     openTextDocumentSpy = sinon.spy(vscode.workspace, "openTextDocument");
     showTextDocumentSpy = sinon.spy(vscode.window, "showTextDocument");
-    await sleep(100);
 
-    editor = await setupEditor(testCases.location);
+    editor = await setupEditor(testCase.location);
     await sleep(100);
 
     consoleColorLog("End setup.", consoleLogColor);
   });
-  const fileName = testCases.location.split("/").slice(-1)[0];
+  const fileName = testCase.location.split("/").slice(-1)[0];
 
   //ANCHOR test
   test(`Popup Message in ${fileName}`, async function () {
-    if (testCases.isCalled) {
+    if (testCase.isCalled) {
       assert.ok(showWarningMessageStub.notCalled, "showWarningMessageStub");
       assert.ok(
         showInformationMessageSpy.calledOnce,
@@ -79,7 +75,7 @@ export const popupMessageTestInVscode = (
         path.resolve(
           path.join(
             path.resolve(__dirname, "../../../../test-workspace"),
-            testCases.location
+            testCase.location
           ),
           "../../../views.py"
         )
@@ -87,12 +83,12 @@ export const popupMessageTestInVscode = (
       assert.strictEqual(openTextDocumentSpy.callCount, 2);
     }
   });
-  teardown(cleanupVscode);
+  teardown(async () => cleanupVscode(consoleLogColor));
   teardown(() => {
     showWarningMessageStub.restore();
     showInformationMessageSpy.restore();
     openTextDocumentSpy.restore();
     showTextDocumentSpy.restore();
-    consoleColorLog("stubs reset");
+    consoleColorLog("stubs reset", consoleLogColor);
   });
 };

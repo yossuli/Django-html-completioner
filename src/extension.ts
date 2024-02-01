@@ -4,21 +4,21 @@ import { djangoHTMLCompletionItemProvider } from "./extensions/djangoHTMLComplet
 
 export function activate(context: vscode.ExtensionContext) {
   console.log(
-    'Congratulations, your extension "extension-exercise" is now active!'
+    'Congratulations, your extension "Django-html-completioner" is now active!'
   );
 
   const disposable = vscode.commands.registerCommand(
-    "extension-exercise.helloWorld",
+    "Django-html-completioner.helloWorld",
     () => {
       vscode.window.showInformationMessage(
-        "Hello World from extension-exercise!"
+        "Hello World from Django-html-completioner!"
       );
     }
   );
 
   const onDidOpenTextDocument = vscode.window.onDidChangeActiveTextEditor(
     () => {
-      vscode.commands.executeCommand("extension-exercise.checkRendering");
+      vscode.commands.executeCommand("Django-html-completioner.checkRendering");
     }
   );
 
