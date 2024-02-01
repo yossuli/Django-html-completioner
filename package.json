@@ -1,26 +1,32 @@
 {
-  "name": "extension-exercise",
-  "displayName": "extension-exercise",
-  "description": "",
+  "name": "django-html-completioner",
   "version": "1.1.1",
+  "publisher": "yossuli",
   "engines": {
     "vscode": "^1.84.0"
   },
+  "license": "MIT",
+  "displayName": "Django-html-completioner",
+  "description": "Django-html will completion by views.py",
   "categories": [
     "Other"
   ],
+  "keywords": [
+    "django",
+    "completion"
+  ],
+  "main": "./dist/extension.js",
   "activationEvents": [
     "onLanguage:django-html"
   ],
-  "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "extension-exercise.helloWorld",
+        "command": "Django-html-completioner.helloWorld",
         "title": "Hello World"
       },
       {
-        "command": "extension-exercise.checkRendering",
+        "command": "Django-html-completioner.checkRendering",
         "title": "Check Rendering"
       }
     ],
@@ -43,7 +49,7 @@
       "editor/context": [
         {
           "when": "editorHasSelection",
-          "command": "extension-exercise.helloWorld",
+          "command": "Django-html-completioner.helloWorld",
           "group": "myGroup@4"
         }
       ]
@@ -85,5 +91,9 @@
     "typescript": "^5.2.2",
     "webpack": "^5.89.0",
     "webpack-cli": "^5.1.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yossuli/Django-html-completioner.git"
   }
 }

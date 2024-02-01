@@ -7,22 +7,19 @@ import { cleanupVscode } from "../cleanupVscode";
 import { setupEditor } from "../setupEditor";
 
 export const completionItemsTestInVscode = (
-  testFileLocationAndExpectedLabel: CompletionItemsTestCases
+  testCase: CompletionItemsTestCases
 ) => {
   vscode.window.showInformationMessage("Start test.");
   let editor: vscode.TextEditor;
-  const consoleLogColor = testFileLocationAndExpectedLabel.color;
+  const consoleLogColor = testCase.color;
   // ANCHOR setup
   setup(async () => {
-    editor = await setupEditor(
-      testFileLocationAndExpectedLabel.location,
-      consoleLogColor
-    );
+    editor = await setupEditor(testCase.location, consoleLogColor);
     consoleColorLog("End setup.", consoleLogColor);
   });
   //ANCHOR test
   test(`Completion Items are Provided from ${
-    testFileLocationAndExpectedLabel.location.split("/").slice(-1)[0]
+    testCase.location.split("/").slice(-1)[0]
   }`, async function () {
     const completionList =
       await vscode.commands.executeCommand<vscode.CompletionList>(
@@ -36,21 +33,17 @@ export const completionItemsTestInVscode = (
       consoleLogColor
     );
 
-    assert.strictEqual(
-      completionList.items.length,
-      testFileLocationAndExpectedLabel.items.length
+    assert.strictEqual(completionList.items.length, testCase.items.length);
+    zip2([completionList.items, testCase.items]).forEach(
+      ([completionItem, expectedLabel]) => {
+        assert.strictEqual(completionItem.label, expectedLabel);
+        assert.strictEqual(
+          completionItem.kind,
+          vscode.CompletionItemKind.Variable
+        );
+        assert.strictEqual(completionItem.detail, "../../../views.py");
+      }
     );
-    zip2([
-      completionList.items,
-      testFileLocationAndExpectedLabel.items,
-    ]).forEach(([completionItem, expectedLabel]) => {
-      assert.strictEqual(completionItem.label, expectedLabel);
-      assert.strictEqual(
-        completionItem.kind,
-        vscode.CompletionItemKind.Variable
-      );
-      assert.strictEqual(completionItem.detail, "../../views.py");
-    });
   });
-  teardown(cleanupVscode);
+  teardown(async () => cleanupVscode(consoleLogColor));
 };

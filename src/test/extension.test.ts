@@ -1,5 +1,4 @@
 import * as vscode from "vscode";
-import { sleep } from "../utils/sleep";
 import type {
   CompletionItemsTestCases,
   PopupMassageItemsTestCases,
@@ -53,6 +52,5 @@ for (const popupMassageItemsTestCase of popupMassageItemsTestCases) {
   suite("Extension Test Suite", async () => {
     vscode.window.showInformationMessage("Start all tests.");
     popupMessageTestInVscode(popupMassageItemsTestCase);
-    await sleep(1000);
   });
 }

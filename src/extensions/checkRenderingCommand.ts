@@ -3,7 +3,7 @@ import * as path from "path";
 import * as vscode from "vscode";
 
 export const checkRenderingCommand = vscode.commands.registerCommand(
-  "extension-exercise.checkRendering",
+  "Django-html-completioner.checkRendering",
   () => {
     const e = vscode.window.activeTextEditor?.document;
     if (!e) return;
@@ -46,7 +46,7 @@ export const checkRenderingCommand = vscode.commands.registerCommand(
           );
         }
       });
-      return "extension-exercise.checkRendering";
+      return "Django-html-completioner.checkRendering";
     }
   }
 );

@@ -34,7 +34,7 @@ export const djangoHTMLCompletionItemProvider =
             a,
             vscode.CompletionItemKind.Variable
           );
-          newCompletionItem.detail = "../../views.py";
+          newCompletionItem.detail = "../../../views.py";
           return newCompletionItem;
         });
       } catch (error) {
