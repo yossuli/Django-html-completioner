@@ -9,7 +9,7 @@ Parse `views.py` and search for the third argument of the function `render`.
 And adds the provided variable name to the completion list.
 If the file you are editing is not defined in `views.py`, you can jump to the file from the popup message.
 
-[gif](./images/Django-html-completioner.gif)
+![gif](./images/Django-html-completioner.gif)
 
 ## Notice
 
